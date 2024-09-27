@@ -2,7 +2,7 @@
  * @Author: mokevip
  * @Date: 2020-09-14 09:24:16
  * @LastEditors: mokevip
- * @LastEditTime: 2020-09-14 10:54:47
+ * @LastEditTime: 2020-09-14 11:00:40
  * @Description: 
 -->
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-control" content="no-cache,must-revalidate">
     <meta http-equiv="Cache" content="no-cache">
-    <title>爱刷题</title>
+    <title>答题类型选择</title>
     <link rel="stylesheet" href="./css/iview.css">
     <script>
         var _hmt = _hmt || [];
@@ -26,58 +26,54 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-
     <style>
-        .title {
-            text-align: center;
+        .typeList {
+            width: 95vw;
+            margin: 2vw auto;
+        }
+        
+        .typeList>div {
             margin-top: 2vw;
-        }
-        
-        .timuList {
-            width: 96vw;
-            margin: 2vw auto 0;
-        }
-        
-        .timu {
-            margin-top: 2vw;
-        }
-        
-        .author {
-            text-align: right;
-            padding-right: 3.2vw;
-            margin-bottom: 1.5vw;
         }
     </style>
+
 </head>
 
 <body>
     <div id="el">
-        <h1 class='title'>爱刷题</h1>
-        <div class="author"><a href="http://blog.mokevip.top">@mokevip的个人博客</a></div>
-        <div class="timuList">
-            <div v-for="i in jsonList" @click='goNext(i.id,i.file)'>
+        <p style="margin-left:3vw;margin-top: 3vw;font-size: 0.9rem;">请选择答题模式：</p>
+        <div class="typeList">
+            <div v-for="i in typeList" @click='goNext(i.id)'>
                 <Card class="timu">
-                    <p slot="title">{{i.name}}</p>
-                    {{i.describe}}
+                    {{i.name}}
                 </Card>
             </div>
-
         </div>
     </div>
-    <script src="./js/public.js?version=1.0"></script>
     <script src="./js/vue.min.js"></script>
     <script src="./js/iview.min.js"></script>
     <script>
         const vue = new Vue({
             el: "#el",
             data: {
-                jsonList: JSONList
+                typeList: [{
+                    id: 'random',
+                    name: "乱序答题"
+                }, {
+                    id: 'order',
+                    name: "顺序答题"
+                }, {
+                    id: 'recite',
+                    name: "背题模式"
+                }, {
+                    id: 'wrong',
+                    name: "错题模式"
+                }]
             },
             methods: {
-                goNext: function(id, file) {
-                    sessionStorage.id = id;
-                    sessionStorage.file = file;
-                    window.location.href = "./type.html"
+                goNext(id) {
+                    sessionStorage.type = id;
+                    window.location.href = "./timu.html"
                 }
             }
         })
